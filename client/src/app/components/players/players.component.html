@@ -1,0 +1,45 @@
+<section class="players">
+  <div class="players-header">
+    <h3>Players</h3>
+    <p *ngIf="state?.players?.length">All answers reveal when everyone is done.</p>
+  </div>
+  <div class="grid">
+    <article class="player-card" *ngFor="let player of state?.players; trackBy: trackById">
+      <div class="player-top">
+        <div class="name-block">
+          <div class="name-row">
+            <span class="name">{{ player.name }}</span>
+            <span class="tag" *ngIf="player.id === state?.adminId">Admin</span>
+            <span class="tag you" *ngIf="player.id === meId">You</span>
+          </div>
+          <div class="edit" *ngIf="isAdmin && player.id !== meId">
+            <input
+              type="text"
+              [ngModel]="nameEdits[player.id] ?? player.name"
+              (ngModelChange)="nameEdits[player.id] = $event"
+              maxlength="20"
+            />
+            <button
+              (click)="rename.emit({ playerId: player.id, currentName: player.name })"
+              [disabled]="!nameEdits[player.id]?.trim()"
+              *ngIf="nameEdits[player.id]?.trim() && nameEdits[player.id]?.trim() !== player.name"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+        <div class="status" [class.ready]="player.hasAnswered">
+          <span class="spinner" *ngIf="!player.hasAnswered"></span>
+          <span>{{ player.hasAnswered ? 'Answered' : 'Waiting' }}</span>
+        </div>
+      </div>
+      <div class="answer-reveal" *ngIf="state?.allAnswered">
+        <span class="label">Answer</span>
+        <p>{{ player.answer || '—' }}</p>
+      </div>
+    </article>
+    <article class="player-card empty" *ngFor="let slot of openSlots">
+      <p>Open slot</p>
+    </article>
+  </div>
+</section>

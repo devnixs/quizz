@@ -1,0 +1,16 @@
+<div class="card join">
+  <h2>Join the round</h2>
+  <p>Up to {{ maxPlayers }} players can join.</p>
+  <div class="input-row">
+    <input
+      type="text"
+      placeholder="Your username"
+      [(ngModel)]="joinName"
+      (ngModelChange)="joinNameChange.emit($event)"
+      (keydown.enter)="submit()"
+      maxlength="20"
+      autocomplete="off"
+    />
+    <button (click)="submit()" [disabled]="isConnecting">Join</button>
+  </div>
+</div>

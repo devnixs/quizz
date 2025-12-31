@@ -1,0 +1,33 @@
+<div class="page">
+  <app-hero [title]="title" [connected]="!!meId"></app-hero>
+
+  <section class="controls">
+    <app-join-card
+      *ngIf="!hasJoined"
+      [maxPlayers]="state.maxPlayers"
+      [(joinName)]="joinName"
+      [isConnecting]="isConnecting"
+      (join)="joinGame()"
+    ></app-join-card>
+    <app-answer-card
+      *ngIf="hasJoined"
+      [(answerText)]="answerText"
+      [waitingCount]="waitingCount"
+      [playerCount]="state.players.length"
+      [isAdmin]="isAdmin"
+      [allAnswered]="state.allAnswered"
+      (submit)="submitAnswer()"
+      (reset)="resetGame()"
+    ></app-answer-card>
+  </section>
+
+  <app-players
+    [state]="state"
+    [meId]="meId"
+    [isAdmin]="isAdmin"
+    [nameEdits]="nameEdits"
+    (rename)="updatePlayerName($event.playerId, $event.currentName)"
+  ></app-players>
+
+  <app-error-banner [message]="errorMessage"></app-error-banner>
+</div>

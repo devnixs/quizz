@@ -1,0 +1,30 @@
+# Git
+.git
+.gitignore
+
+# Documentation
+*.md
+!README.md
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+
+# Node
+client/node_modules
+client/dist
+client/.angular
+
+# .NET
+server/bin
+server/obj
+
+# Docker
+Dockerfile
+.dockerignore
+
+# Misc
+*.log
+.DS_Store
