@@ -19,7 +19,9 @@
       "Bash(xargs docker stop:*)",
       "Bash(dotnet restore:*)",
       "Bash(dotnet test:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "mcp__chrome-devtools__resize_page",
+      "mcp__chrome-devtools__take_screenshot"
     ]
   },
   "enableAllProjectMcpServers": true,

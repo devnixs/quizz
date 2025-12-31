@@ -196,7 +196,14 @@ button:disabled {
 .player-top {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.name-block {
+  flex: 1;
+  min-width: 0;
 }
 
 .name {
@@ -229,6 +236,8 @@ button:disabled {
   gap: 6px;
   font-size: 0.8rem;
   font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .status.ready {
@@ -267,9 +276,12 @@ button:disabled {
   margin-top: 6px;
   display: flex;
   gap: 6px;
+  flex-wrap: wrap;
 }
 
 .edit input {
+  flex: 1;
+  min-width: 80px;
   padding: 6px 8px;
   font-size: 0.8rem;
 }
