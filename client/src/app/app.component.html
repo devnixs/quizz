@@ -16,6 +16,8 @@
       [playerCount]="state.players.length"
       [isAdmin]="isAdmin"
       [allAnswered]="state.allAnswered"
+      [myHasAnswered]="myHasAnswered"
+      [myAnswer]="myAnswer"
       (submit)="submitAnswer()"
       (reset)="resetGame()"
     ></app-answer-card>

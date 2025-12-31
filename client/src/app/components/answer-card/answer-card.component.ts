@@ -14,6 +14,8 @@ export class AnswerCardComponent {
   @Input() playerCount = 0;
   @Input() isAdmin = false;
   @Input() allAnswered = false;
+  @Input() myHasAnswered = false;
+  @Input() myAnswer: string | null = null;
 
   @Output() answerTextChange = new EventEmitter<string>();
   @Output() submit = new EventEmitter<void>();

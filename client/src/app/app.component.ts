@@ -28,6 +28,7 @@ export class AppComponent implements OnInit {
   };
   joinName = '';
   answerText = '';
+  submittedAnswer = '';
   errorMessage = '';
   isConnecting = false;
   nameEdits: Record<string, string> = {};
@@ -52,6 +53,18 @@ export class AppComponent implements OnInit {
     return this.state.players.filter((player) => !player.hasAnswered).length;
   }
 
+  get myPlayer() {
+    return this.state.players.find((player) => player.id === this.meId);
+  }
+
+  get myHasAnswered(): boolean {
+    return this.myPlayer?.hasAnswered ?? false;
+  }
+
+  get myAnswer(): string | null {
+    return this.myPlayer?.answer ?? (this.submittedAnswer || null);
+  }
+
   async connect(): Promise<void> {
     if (this.connection || this.isConnecting) {
       return;
@@ -64,7 +77,12 @@ export class AppComponent implements OnInit {
       .build();
 
     connection.on('StateUpdated', (snapshot: GameStateDto) => {
+      const wasAnswered = this.myHasAnswered;
       this.state = snapshot;
+      // Clear submitted answer when game is reset (hasAnswered goes from true to false)
+      if (wasAnswered && !this.myHasAnswered) {
+        this.submittedAnswer = '';
+      }
       this.errorMessage = '';
     });
 
@@ -134,6 +152,7 @@ export class AppComponent implements OnInit {
 
     try {
       await this.connection.invoke('SubmitAnswer', answer);
+      this.submittedAnswer = answer;
       this.answerText = '';
       this.errorMessage = '';
     } catch (error: any) {
@@ -169,6 +188,7 @@ export class AppComponent implements OnInit {
 
     try {
       await this.connection.invoke('ResetGame');
+      this.submittedAnswer = '';
       this.errorMessage = '';
     } catch (error: any) {
       this.errorMessage = error?.message ?? 'Unable to reset.';

@@ -1,11 +1,12 @@
 <div class="card answer">
   <div class="answer-header">
     <div>
-      <h2>Answer the question</h2>
+      <h2>{{ myHasAnswered ? 'Answer submitted' : 'Answer the question' }}</h2>
+      <p *ngIf="!myHasAnswered">Listen for the question and enter your response.</p>
     </div>
     <div class="admin-badge" *ngIf="isAdmin">Admin</div>
   </div>
-  <div class="input-row">
+  <div class="input-row" *ngIf="!myHasAnswered">
     <input
       type="text"
       placeholder="Type your answer"
@@ -16,6 +17,10 @@
       autocomplete="off"
     />
     <button (click)="submit.emit()">Submit</button>
+  </div>
+  <div class="submitted-answer" *ngIf="myHasAnswered">
+    <p>You answered: <strong>{{ myAnswer }}</strong></p>
+    <p class="waiting-note" *ngIf="!allAnswered">Waiting for other players...</p>
   </div>
   <div class="note" *ngIf="playerCount">
     {{ waitingCount }} waiting • {{ playerCount }} players in room
